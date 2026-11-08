@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#184e45">
+  <meta name="description" content="国土地理院の地図と航空写真を切り替えて、日本の地形を探索するWebGIS。">
+  <title>地図の窓 — GSI WebGIS</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23184e45'/%3E%3Cpath d='m10 44 14-26 13 19 8-12 10 19Z' fill='%23e4efdc'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="vendor/leaflet.css">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="vendor/leaflet.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="地図の窓 ホーム"><span class="brand-symbol" aria-hidden="true">⌁</span><span>地図の窓<small>GSI WEBGIS</small></span></a>
+    <span class="header-note">地形を読み、場所を知る。</span>
+    <nav class="header-actions" aria-label="ページ操作"><a class="lab-home" href="../../">← 一覧</a><button id="share" class="share">↗ 表示位置を共有</button></nav>
+  </header>
+  <main class="workspace">
+    <aside id="sidebar" class="sidebar" aria-label="地図の設定">
+      <div class="sidebar-heading"><span class="eyebrow">EXPLORE JAPAN</span><button id="panel-close" class="mobile-only" aria-label="設定を閉じる">×</button></div>
+      <h1>地図をひらく。</h1>
+      <p class="intro">街のかたちから、山の稜線まで。<br>国土地理院の地図で探索しましょう。</p>
+      <section aria-labelledby="basemap-title">
+        <h2 id="basemap-title"><span>01</span> 背景地図</h2>
+        <div class="basemaps">
+          <button class="basemap active" data-layer="std" aria-pressed="true"><span class="map-swatch standard" aria-hidden="true"></span><span><strong>標準地図</strong><small>地名や道路、等高線を詳しく</small></span><span class="radio" aria-hidden="true"></span></button>
+          <button class="basemap" data-layer="pale" aria-pressed="false"><span class="map-swatch pale" aria-hidden="true"></span><span><strong>淡色地図</strong><small>地形をすっきりと見渡す</small></span><span class="radio" aria-hidden="true"></span></button>
+          <button class="basemap" data-layer="photo" aria-pressed="false"><span class="map-swatch photo" aria-hidden="true"></span><span><strong>航空写真</strong><small>上空から実際の様子を見る</small></span><span class="radio" aria-hidden="true"></span></button>
+        </div>
+      </section>
+      <section aria-labelledby="move-title">
+        <h2 id="move-title"><span>02</span> 場所へ移動</h2>
+        <form id="coordinate-form">
+          <label for="coordinates">緯度, 経度 <small>（十進度）</small></label>
+          <div class="input-row"><input id="coordinates" name="coordinates" placeholder="35.6812, 139.7671" autocomplete="off" spellcheck="false" required><button type="submit" aria-label="入力した座標へ移動">→</button></div>
+          <p id="coordinate-error" class="error" role="alert"></p>
+        </form>
+        <div class="places" aria-label="おすすめの場所"><button data-place="tokyo">東京</button><button data-place="fuji">富士山</button><button data-place="kyoto">京都</button><button data-place="sapporo">札幌</button></div>
+      </section>
+      <section aria-labelledby="tools-title">
+        <h2 id="tools-title"><span>03</span> 地図の道具</h2>
+        <div class="tools"><button id="locate"><span aria-hidden="true">◎</span>現在地</button><button id="measure" aria-pressed="false"><span aria-hidden="true">⌁</span>距離計測</button></div>
+        <div id="measurement" class="measurement" hidden><span>地図をクリックして点を追加</span><strong id="distance">0 m</strong><small>球面上の概算距離・標高差は含みません</small><div><button id="undo-point">1点戻す</button><button id="clear-measure">クリア</button></div></div>
+      </section>
+      <div class="sidebar-footer"><span class="source-dot"></span> 地理院タイルを使用<br><a href="sources.html" target="_blank" rel="noopener noreferrer">データの出典・詳細 ↗</a><p>地図上をクリックすると座標を確認できます。</p></div>
+    </aside>
+    <section class="map-area" aria-label="地図ビュー">
+      <div id="map" tabindex="0" aria-label="国土地理院の地図。矢印キーで移動、プラス・マイナスキーで拡大縮小"></div>
+      <button id="panel-open" class="panel-open mobile-only" aria-label="地図の設定を開く">☰ 地図の設定</button>
+      <div class="map-label"><span class="source-dot"></span><span id="layer-label">標準地図</span><span class="label-divider">/</span>国土地理院</div>
+      <div class="map-controls" aria-label="表示操作"><button id="zoom-in" aria-label="拡大">＋</button><button id="zoom-out" aria-label="縮小">−</button><span></span><button id="home" aria-label="初期位置に戻る">⌂</button><button id="fullscreen" aria-label="全画面表示">⛶</button></div>
+      <div id="tile-status" class="tile-status" role="status" hidden>地図を読み込み中…</div>
+      <div id="measure-overlay" class="measure-overlay" hidden><span>距離計測中 <strong id="map-distance" aria-live="polite">0 m</strong></span><button id="map-undo" aria-label="計測点を1点戻す">↶</button><button id="map-clear" aria-label="計測点をクリア">クリア</button><button id="map-finish" aria-label="距離計測を閉じる">×</button></div>
+      <div class="position-bar"><span class="crosshair-icon" aria-hidden="true">⊕</span><span id="center-coordinate">35.68120° N, 139.76710° E</span><span class="position-divider"></span><span>ズーム <b id="zoom-level">12</b></span></div>
+      <div id="toast" class="toast" role="status" hidden></div>
+    </section>
+  </main>
+  <dialog id="share-dialog"><h2>表示位置を共有</h2><p>URLをコピーして、同じ地図を開けます。</p><label for="share-url">共有URL</label><input id="share-url" readonly><button id="share-close">閉じる</button></dialog>
+  <noscript>このWebGISを使うにはJavaScriptを有効にしてください。</noscript>
+</body>
+</html>
