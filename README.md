@@ -6,8 +6,6 @@ aki-imaoka のWebGISプロジェクト集です。地図を使った実験や、
 
 ## 🌱 プロジェクト
 
-- **地図の窓**（`projects/gsi-viewer/`）：標準地図・淡色地図・航空写真の切り替え、座標移動、距離計測、表示位置の共有。
-- データの出典・撮影時期・距離の定義・現在地の扱いは、作品内の `sources.html` に記載しています。
 - **広葉樹の流通シミュレーション**（`projects/webgis-timber/`、v0.13.1）：4つの立場から、調達先・運送費・費用や収支を比較します。広島県周辺の公開GISと架空の在庫・事業者・料金を使った実験用デモです。前提とデータの出典は作品内の `sources.html` に記載しています。
 
 公開サイトは https://aki-imaoka.github.io/webgis-lab/ です。閲覧にはcloneやNode.jsは不要です。
@@ -24,7 +22,7 @@ node server.mjs
 
 既にclone済みなら、保存先で `node server.mjs` だけを実行します。ブラウザで http://127.0.0.1:4187/webgis-lab/ を開きます。終了はサーバー画面で Ctrl+C です。Windowsでポートが使用中の場合は `set PORT=4188` の後で起動します。
 
-地図の取得にはインターネット接続が必要です。現在地やクリップボードはブラウザの許可・対応状況によって使えない場合があります。ローカルURLは他のPCから開けないため、他の人への共有には公開サイトのURLを使います。
+背景地図の取得にはインターネット接続が必要です。ローカルURLは他のPCから開けないため、他の人への共有には公開サイトのURLを使います。
 
 ## 📂 構成と入力
 
@@ -32,12 +30,11 @@ node server.mjs
 index.html                 プロジェクト一覧
 assets/                    一覧のスタイル・装飾画像
 projects/
-  gsi-viewer/               地図の窓（HTML・CSS・JS・出典・Leaflet）
   webgis-timber/            広葉樹の流通（単一HTML・出典・ライセンス）
 server.mjs / start.cmd      ローカル確認用
 ```
 
-公開するページはHTML・CSS・JavaScriptです。主要入力は国土地理院の公開タイルと、利用者が指定する座標です。サーバーへのユーザーデータ保存や外部APIキーは使いません。座標は緯度・経度、地図の投影は EPSG:3857 です。
+公開するページはHTML・CSS・JavaScriptです。主要入力は架空の在庫・料金、加工済みの公開GIS、国土地理院の公開タイルと、利用者が指定する試算条件です。サーバーへのユーザーデータ保存や外部APIキーは使いません。座標は緯度・経度、地図の投影は EPSG:3857 です。
 
 ## ➕ プロジェクトを追加する
 
@@ -67,14 +64,14 @@ server.mjs / start.cmd      ローカル確認用
 
 | 対象 | 版・取得元 | 条件と対応 |
 | --- | --- | --- |
-| 地図の窓 | 既存の本人用アプリ（2026-11-01作成版） | 一覧へ戻るリンクを追加。 |
-| Leaflet | 1.9.4、https://github.com/Leaflet/Leaflet/tree/v1.9.4 | 既存アプリに同梱されたJS・CSS・ライセンスを再利用。BSD-2-Clause。`projects/gsi-viewer/vendor/LICENSE-Leaflet.txt` の表示を保持。標準マーカー画像を使わない構成。 |
-| 地理院タイル | std / pale / seamlessphoto、https://maps.gsi.go.jp/development/ichiran.html | 公式のリアルタイム読込みの案内を確認。地図に出典リンク、`sources.html` に追加出典を掲載。タイル画像は同梱しない。 |
+| Leaflet | 1.9.4、https://github.com/Leaflet/Leaflet/tree/v1.9.4 | BSD-2-Clause。木材流通アプリのHTML内と `projects/webgis-timber/LICENSE-Leaflet.txt` にライセンスを保持。 |
+| 地理院タイル | pale、https://maps.gsi.go.jp/development/ichiran.html | 地図に出典リンク、作品の `sources.html` に利用情報を掲載。タイル画像は同梱しない。 |
 | 木材流通の公開GIS | 国土数値情報の道路2024年度・標高傾斜度2011年度、林野庁の森林資源・森林区域、環境省の現存植生図2024 | 加工済みの参考経路・3山周辺2kmのレイヤ等を単一HTMLへ同梱。提供者・利用条件・加工内容は `projects/webgis-timber/sources.html` に掲載。架空在庫・仮料金とは区別する。 |
 
 外部ライブラリ・データには、それぞれの利用条件が適用されます。このリポジトリの自作部分の公開ライセンスは未設定です。
 
 ## 🔄 改訂履歴
 
+- 2026-11-08：本人の希望により「地図の窓」を一覧と公開ファイルから削除。「広葉樹の流通」を継続公開。
 - 2026-11-08：2作目「広葉樹の流通シミュレーション」v0.13.1と出典ページを追加。計算処理・内蔵データを保持し、一覧へ戻るリンクを追加。
 - 2026-11-08：複数作品を追加できる一覧ページ、最初の地図、ローカル確認用サーバー、追加・公開手順を作成。
