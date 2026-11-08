@@ -27,6 +27,8 @@ h1 { font-size:clamp(32px,3.8vw,47px); line-height:1.55; letter-spacing:2px; fon
 h2 { font-size:23px; font-weight:600; letter-spacing:1px; margin:0; }
 .section-heading>p { font-size:11px; color:var(--muted); margin:0 0 3px; }
 .project { display:grid; grid-template-columns:1fr 1.2fr; gap:42px; margin-top:30px; align-items:center; }
+.project + .project { border-top:1px solid var(--line); padding-top:30px; }
+.project-preview.timber-preview { background-color:#3d4935; }
 .project-preview { display:block; position:relative; min-height:275px; padding:25px; overflow:hidden; border-radius:14px; color:#eaf1e3; text-decoration:none; background:#184e45; }
 .project-preview:before { content:""; position:absolute; inset:0; background:url(contours.svg) center/cover; opacity:.23; transition:transform .3s; }
 .project-preview:hover:before { transform:scale(1.04); }

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>前提・データの出典 — 広葉樹の流通</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+  <style>
+    .source-document{max-width:850px;margin:0 auto;padding:32px 24px 60px;line-height:1.9}
+    .source-document h1{font-size:27px;margin:25px 0 10px}.source-document h2{font-size:20px;margin:32px 0 10px}
+    .source-document h3{font-size:16px;margin:22px 0 5px}.source-document p,.source-document li{font-size:13px}
+    .source-document nav{display:flex;flex-wrap:wrap;gap:24px;font-size:12px}.source-document .notice{background:#eaf0e5;border-left:3px solid #79976d;padding:10px 18px}
+    .source-document a{overflow-wrap:anywhere}.source-document li{margin:8px 0}.source-document .version{color:var(--muted);font-size:12px}
+  </style>
+</head>
+<body>
+  <main class="source-document">
+    <nav aria-label="ページ移動"><a href="./">← シミュレーションへ</a><a href="../../">プロジェクト一覧</a></nav>
+    <h1>前提・データの出典</h1>
+    <p class="version">広葉樹の流通シミュレーション v0.13.1 / データ取得・加工：2026年11月8日</p>
+    <div class="notice"><p>森林・事業者・在庫・料金・品質・需要は架空の設定です。公開GISを重ねて費用や流通の条件を考える実験用デモで、実際の見積・取引・通行可能性を示すものではありません。</p></div>
+    <h2>参考経路と周辺環境</h2>
+    <p>道路距離は登録点を最寄り道路線へ接続して前計算した参考最短距離です。道路を実線、接続線を橙の点線で表示します。一方通行、重量・高さ規制、橋梁耐荷重、私道許可、通行止め、車格ごとの走行可否と接続線の通行可能性は未確認です。道路モードで経路のない組合せを、直線の運賃で補っていません。</p>
+    <p>森林・植生・傾斜のレイヤは、架空の3山の登録点から周囲2kmを抽出したものです。土場の予備候補は植生区画から抽出しており、現在の空地、使用権、平坦性、地耐力、積込スペース、車両進入を確認した場所ではありません。面積は切り出した植生区画の面積です。傾斜は250mメッシュの参考値で、土場の局所勾配を示しません。</p>
+    <h2>データの提供者・利用条件・加工内容</h2>
+    <p>下記の公開情報をもとに、aki-imaokaが抽出・集計・形状修復・簡略化・経路計算を行って作成しました。提供機関がこのアプリや試算結果を作成・保証したものではありません。</p>
+    <h3>国土数値情報 道路（2024年度）</h3>
+    <p>出典：<a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N13-2024.html">国土交通省「国土数値情報 道路データ」</a>。<a href="https://creativecommons.org/licenses/by/4.0/deed.ja">CC BY 4.0</a>。道路線から参考経路を計算し、距離は簡略化前の形状、表示線は3mで簡略化した形状を使っています。元データは経路探索用のノード・リンク構造を保証していません。</p>
+    <h3>全国森林資源メッシュ・森林計画対象森林レイヤ</h3>
+    <p>出典：林野庁 <a href="https://www.geospatial.jp/ckan/dataset/mesh_tile">全国森林資源メッシュ</a>、<a href="https://www.geospatial.jp/ckan/dataset/layer">森林計画対象森林レイヤ</a>。2025公開版のタイルから対象範囲を抽出し、林種・原典時点・森林区域等を表示しています。20mメッシュの情報は、架空のケヤキ・サクラの本数やDBHを裏付ける情報ではありません。</p>
+    <p><a href="https://www.digital.go.jp/resources/open_data/public_data_license_v1.0">公共データ利用規約（PDL1.0）</a>と各データの固有利用規約・重要情報に基づき利用しています。現地や登記との一致、所有権・境界・面積・伐採権限を証明せず、各原典の整備時点の情報です。</p>
+    <ul>
+      <li><a href="https://www.geospatial.jp/ckan/dataset/45394c4d-e721-4a0c-9149-a0d5160bc694/resource/9f86f244-8f9d-4224-8487-964a349c101b/download/national_forest_resource_mesh_terms_of_use.pdf">全国森林資源メッシュの利用規約</a> / <a href="https://www.geospatial.jp/ckan/dataset/45394c4d-e721-4a0c-9149-a0d5160bc694/resource/f7c11a14-05c7-466d-8aa2-b123791bfee6/download/important_notes_on_public_data_usage_mesh_terms_v1.0.pdf">PDL1.0に関する重要情報</a></li>
+      <li><a href="https://www.geospatial.jp/ckan/dataset/aa0bc6ed-f5ac-4f05-89c6-0c7034503303/resource/248232db-b42b-4e34-8f47-5bfb37bd1b59/download/forest_planning_target_forest_layer_terms_of_use.pdf">森林計画対象森林レイヤの利用規約</a> / <a href="https://www.geospatial.jp/ckan/dataset/aa0bc6ed-f5ac-4f05-89c6-0c7034503303/resource/699da07c-08aa-4fc8-887e-6585d55dfaf5/download/important_notes_on_public_data_usage_layer_terms_v1.0.pdf">PDL1.0に関する重要情報</a></li>
+    </ul>
+    <h3>現存植生図2024</h3>
+    <p>出典：環境省生物多様性センター <a href="https://www.geospatial.jp/ckan/dataset/biodic_veg2024">現存植生図2024</a>、<a href="https://www.digital.go.jp/resources/open_data/public_data_license_v1.0">PDL1.0</a>。1999–2024事業年度の調査成果をもとに対象範囲を抽出し、裸地・空地・路傍・造成地・伐採跡・芝地・人工草地を予備候補として抽出しています。各区画の作成年度を表示し、現在の土地利用とは区別します。</p>
+    <h3>標高・傾斜度5次メッシュ（2011年度）</h3>
+    <p>出典：<a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-G04-d.html">国土交通省「国土数値情報 標高・傾斜度5次メッシュ」</a>を加工。商用利用可・出典明示の条件に従い、250mメッシュの標高・傾斜を参照しています。原標高データは2009年度時点です。</p>
+    <h3>架空拠点の位置の参照</h3>
+    <p>地点は架空の事業者・森林の仮配置です。東広島駅付近は<a href="https://mapfan.com/spots/SCH,J,IW">MapFanの東広島駅情報</a>、神石高原町の代表点と君田町茂田の図形中心点は下記を位置の目安として参照しました。実在の事業者や所有者との関係を示しません。</p>
+    <p><a href="https://geoshape.ex.nii.ac.jp/city/resource/34545A2004.html">歴史的行政区域データセットβ版</a>、<a href="https://geoshape.ex.nii.ac.jp/ka/resource/34/342090450.html">国勢調査町丁・字等別境界データセット</a>（CODH作成、CC BY 4.0）。後者は「令和2年国勢調査町丁・字等別境界データ」（e-Stat）を加工、doi:10.20676/00000450。境界データそのものは同梱していません。</p>
+    <h2>背景地図・ライブラリ・通信</h2>
+    <p>背景地図は<a href="https://maps.gsi.go.jp/development/ichiran.html">国土地理院の淡色地図</a>をオンラインで読み込みます。タイル画像は同梱していません。</p>
+    <p><a href="https://leafletjs.com/">Leaflet</a> 1.9.4（BSD-2-Clause）のコード・CSSと著作権表示を単一HTML内に保持しています。<a href="LICENSE-Leaflet.txt">ライセンス全文</a>。</p>
+    <p>このアプリには注文・在庫の送信、予約、発注、入力条件の永続保存の機能はありません。計算用データはHTML内に保持し、背景地図の表示時にタイル配信元へ表示範囲のリクエストを送ります。</p>
+  </main>
+</body>
+</html>
